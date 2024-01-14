@@ -23,6 +23,7 @@ import { AUTH_SERVICE } from '@app/common';
       isGlobal: true,
       envFilePath: './apps/reservations/.env',
       validationSchema: Joi.object({
+        NODE_ENV: Joi.string().valid('development', 'production').required(),
         MONGODB_URI: Joi.string().required(),
         HTTP_PORT: Joi.number().required(),
         AUTH_HOST: Joi.string().required(),
