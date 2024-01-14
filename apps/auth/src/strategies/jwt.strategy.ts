@@ -14,6 +14,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         (request: any) =>
+          // See auth.service.ts where cookie gets set
           request?.cookies?.Authentication ||
           request?.Authentication ||
           request?.headers.Authentication,
@@ -22,6 +23,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
+  // token payload is created in auth.service.ts login method
   async validate({ userId }: TokenPayload) {
     return this.usersService.getUser({ _id: userId });
   }
