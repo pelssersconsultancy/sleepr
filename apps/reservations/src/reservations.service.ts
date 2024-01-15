@@ -14,14 +14,17 @@ export class ReservationsService {
   ) {}
 
   async create(createReservationDto: CreateReservationDto, userId: string) {
-    this.paymentsService
+    console.log('DEBUG createReservationDto', createReservationDto);
+
+    return this.paymentsService
       .send('create_charge', createReservationDto.charge)
       .pipe(
-        map(() => {
+        map((payment) => {
           return this.reservationsRepository.create({
             ...createReservationDto,
             timestamp: new Date(),
             userId,
+            invoiceId: payment.id,
           });
         }),
       );
